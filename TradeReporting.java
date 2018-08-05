@@ -157,8 +157,8 @@ public class TradeReporting {
 	 */
 	private static void validateTrade(Trade objTrade) {
 		double dTrdAmount;
-		double fPrcPerUnit;
-		double fFx;
+		double dPrcPerUnit;
+		double dFx;
 		double dTotalAmount = 0.00;
 		long lUnits;
 		String strStlmntDate;
@@ -187,10 +187,10 @@ public class TradeReporting {
 		//Reading properties from the trade object and setting the trade amount
 		strEntity = objTrade.getStrEntity();
 		strStlmntDate = objTrade.getRevStlmntDate().toString();
-		fPrcPerUnit = objTrade.getPricePerUnit();
+		dPrcPerUnit = objTrade.getPricePerUnit();
 		lUnits = objTrade.getUnits();
-		fFx = objTrade.getFxRate();
-		dTrdAmount = fPrcPerUnit * lUnits * fFx;
+		dFx = objTrade.getFxRate();
+		dTrdAmount = dPrcPerUnit * lUnits * dFx;
 		objTrade.setTrdAmount(dTrdAmount);
 
 		//Populating the Incoming and Outgoing HashMaps for Entities and Reporting dates
