@@ -46,14 +46,14 @@ public class TradeReportingMainApp {
 			TradeDAO objTrdDAO = new TradeDAO();
 			hmMap = objTrdProc.processTrade(objTrdDAO.getTrades());
 			//Read Reporting Date from the console
-			System.out.print("Enter a date for reporting in dd/mm/yyyy format: ");
+			System.out.print("Enter a date for reporting in dd/MM/yyyy format: ");
 			Scanner scanner = new Scanner(System.in);
 			String strReportDate = sdf.parse(scanner.nextLine()).toString();
 			scanner.close();
-			System.out.println("Reporting date: " + strReportDate);
+			//System.out.println("Reporting date: " + strReportDate);
 			objRepGen.generateTradeSalesReport(strReportDate, hmMap);
 		} catch(ParseException dateFormatExcp) {
-			System.out.println("Date format should be in dd/mm/yyyy format!!!!");
+			System.out.println("Date format should be in dd/MM/yyyy format!!!!");
 			dateFormatExcp.printStackTrace();
 		}//End of catch block
 	}//End of main method

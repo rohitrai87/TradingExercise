@@ -97,7 +97,7 @@ public class ReportGeneratorImpl implements ReportGenerator {
 	 * This method is used to print trade sales report
 	 * @param hmSortedMap for Sorted Ranking Map
 	 */
-	public static void printRankReport(Map<String, Double> hmSortedMap) {
+	private void printRankReport(Map<String, Double> hmSortedMap) {
 		//Printing values after sorting the map
 		int iRank = 0;
 		System.out.println("-------------------------------------------------");

@@ -21,6 +21,18 @@ public class TradeProcessorImplTest {
 	@Test
 	public void testProcessTrade() throws ParseException {
 		alTrades = objTradeSalSim.getTradeDetails();
+		
+		for(Trade t : alTrades) {
+			System.out.println("--------------------------");
+			System.out.println(t.getStrEntity());
+			System.out.println(t.getFxRate());
+			System.out.println(t.getPricePerUnit());
+			System.out.println(t.getStrCurr());
+			System.out.println(t.getStrFlag());
+			System.out.println(t.getUnits());
+			System.out.println(t.getOrigStlmntDate());
+		}
+		
 		hmMap = objTrdProcImplTest.processTrade(alTrades);
 		assertNotNull(hmMap);
 		assertTrue(!hmMap.isEmpty());
@@ -28,9 +40,11 @@ public class TradeProcessorImplTest {
 		assertNotNull(hmMap.get(TradeConstants.OUTGOING_SETTLEMENT_AMNT));
 		assertNotNull(hmMap.get(TradeConstants.INCOMING_ENTITY_RANK));
 		assertNotNull(hmMap.get(TradeConstants.OUTGOING_ENTITY_RANK));
-		assertNotNull(!(hmMap.get(TradeConstants.INCOMING_SETTLEMENT_AMNT)).isEmpty());
-		assertNotNull(!(hmMap.get(TradeConstants.OUTGOING_SETTLEMENT_AMNT)).isEmpty());
-		assertNotNull(!(hmMap.get(TradeConstants.INCOMING_ENTITY_RANK)).isEmpty());
-		assertNotNull(!(hmMap.get(TradeConstants.OUTGOING_ENTITY_RANK)).isEmpty());
+		assertTrue(!(hmMap.get(TradeConstants.INCOMING_SETTLEMENT_AMNT)).isEmpty());
+		assertTrue(!(hmMap.get(TradeConstants.OUTGOING_SETTLEMENT_AMNT)).isEmpty());
+		assertTrue(!(hmMap.get(TradeConstants.INCOMING_ENTITY_RANK)).isEmpty());
+		assertTrue(!(hmMap.get(TradeConstants.OUTGOING_ENTITY_RANK)).isEmpty());
+		assertNotNull((hmMap.get(TradeConstants.INCOMING_SETTLEMENT_AMNT)).get("Sun Jul 29 00:00:00 BST 2018"));
+		
 	}
 }

@@ -50,7 +50,10 @@ public class ReportGeneratorImplTest {
 	
 	@Test
 	public void testGenerateTradeSalesReport() {
+		objRepGenImplTest.generateTradeSalesReport("28/07/2018", hmMap);
 		objRepGenImplTest.generateTradeSalesReport("29/07/2018", hmMap);
+		objRepGenImplTest.generateTradeSalesReport("30/07/2018", hmMap);
+		objRepGenImplTest.generateTradeSalesReport("31/07/2018", hmMap);
 	}
 
 }
