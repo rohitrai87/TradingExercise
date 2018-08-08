@@ -16,7 +16,7 @@
  *
  * Author Name           :Rohit.Rai
  *
- * Date                  :07-Aug-2018
+ * Date                  :08-Aug-2018
  *
  * Revision History      :1.0.0.0
  *                        Author Name  Date        Change Description  Version	 	
@@ -25,111 +25,54 @@
 
 package com.trade.service.impl;
 
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.trade.beans.Trade;
-import com.trade.constants.TradeConstants;
 import com.trade.constants.TradeCurrency;
-import com.trade.constants.TradeType;
 import com.trade.constants.TradeWeekends;
 import com.trade.service.TradeProcessor;
 import com.trade.util.TradeUtility;
+import com.trade.constants.TradeConstants;
+import java.math.BigDecimal;
 
 public class TradeProcessorImpl implements TradeProcessor {
-	private static SimpleDateFormat day = new SimpleDateFormat("EEEE");
-	private Map<String, Double> hmIncomingStlmntAmnt = new HashMap<String, Double>();
-	private Map<String, Double> hmOutgoingStlmntAmnt = new HashMap<String, Double>();
-	private Map<String, Double> hmIncomingEntityRank = new HashMap<String, Double>();
-	private Map<String, Double> hmOutgoingEntityRank = new HashMap<String, Double>();
-	private Map<String, Map<String, Double>> hmMap = new HashMap<String, Map<String, Double>>();
-
 	/**
 	 * This method is used to process the trades and calculate their amounts and revised settlement dates
-	 * @param alTrade for a list containing all the trades
-	 * @return hmMap for HashMap containing all the trade details HashMap
+	 * @param objTrade for trade
+	 * @return objTrade for processed trade
 	 */
-	public Map<String, Map<String, Double>> processTrade(List<Trade> alTrade) {
-		for(Trade objTrade : alTrade) {
-			double dTrdAmount;
-			double dPrcPerUnit;
-			double dFx;
-			double dTotalAmount = 0.00;
-			long lUnits;
-			String strStlmntDate;
-			String strEntity;
+	public Trade processTrade(Trade objTrade) {
+		BigDecimal bdTrdAmount;
+		BigDecimal bdPrcPerUnit;
+		BigDecimal bdFx;
+		long lUnits;
 
-			//Calculating Revised settlement date based on Currency
-			if((objTrade.getStrCurr().equalsIgnoreCase(TradeCurrency.AED)) 
-					|| (objTrade.getStrCurr().equalsIgnoreCase(TradeCurrency.SAR))) {
-				if(day.format(objTrade.getOrigStlmntDate()).equalsIgnoreCase(TradeWeekends.FRI)) {
-					objTrade.setRevStlmntDate(TradeUtility.addDays(objTrade.getOrigStlmntDate(), 2));
-				} else if(day.format(objTrade.getOrigStlmntDate()).equalsIgnoreCase(TradeWeekends.SAT)) {
-					objTrade.setRevStlmntDate(TradeUtility.addDays(objTrade.getOrigStlmntDate(), 1));
-				} else {
-					objTrade.setRevStlmntDate(objTrade.getOrigStlmntDate());
-				}
+		//Calculating Revised settlement date based on Currency
+		if((objTrade.getStrCurr().equalsIgnoreCase(TradeCurrency.AED)) 
+				|| (objTrade.getStrCurr().equalsIgnoreCase(TradeCurrency.SAR))) {
+			if(TradeConstants.day.format(objTrade.getOrigStlmntDate()).equalsIgnoreCase(TradeWeekends.FRI)) {
+				objTrade.setRevStlmntDate(TradeUtility.addDays(objTrade.getOrigStlmntDate(), 2));
+			} else if(TradeConstants.day.format(objTrade.getOrigStlmntDate()).equalsIgnoreCase(TradeWeekends.SAT)) {
+				objTrade.setRevStlmntDate(TradeUtility.addDays(objTrade.getOrigStlmntDate(), 1));
 			} else {
-				if(day.format(objTrade.getOrigStlmntDate()).equalsIgnoreCase(TradeWeekends.SAT)) {
-					objTrade.setRevStlmntDate(TradeUtility.addDays(objTrade.getOrigStlmntDate(), 2));
-				} else if(day.format(objTrade.getOrigStlmntDate()).equalsIgnoreCase(TradeWeekends.SUN)) {
-					objTrade.setRevStlmntDate(TradeUtility.addDays(objTrade.getOrigStlmntDate(), 1));
-				} else {
-					objTrade.setRevStlmntDate(objTrade.getOrigStlmntDate());
-				}
-			}//End of currency else block
+				objTrade.setRevStlmntDate(objTrade.getOrigStlmntDate());
+			}
+		} else {
+			if(TradeConstants.day.format(objTrade.getOrigStlmntDate()).equalsIgnoreCase(TradeWeekends.SAT)) {
+				objTrade.setRevStlmntDate(TradeUtility.addDays(objTrade.getOrigStlmntDate(), 2));
+			} else if(TradeConstants.day.format(objTrade.getOrigStlmntDate()).equalsIgnoreCase(TradeWeekends.SUN)) {
+				objTrade.setRevStlmntDate(TradeUtility.addDays(objTrade.getOrigStlmntDate(), 1));
+			} else {
+				objTrade.setRevStlmntDate(objTrade.getOrigStlmntDate());
+			}
+		}//End of currencies other than AED and SAR else block
 
-			//Reading properties from the trade object and setting the trade amount
-			strEntity = objTrade.getStrEntity();
-			strStlmntDate = objTrade.getRevStlmntDate().toString();
-			dPrcPerUnit = objTrade.getPricePerUnit();
-			lUnits = objTrade.getUnits();
-			dFx = objTrade.getFxRate();
-			dTrdAmount = dPrcPerUnit * lUnits * dFx;
-			objTrade.setTrdAmount(dTrdAmount);
+		//Reading properties from the trade object and setting the trade amount
+		bdPrcPerUnit = objTrade.getPricePerUnit();
+		lUnits = objTrade.getUnits();
+		bdFx = objTrade.getFxRate();
+		bdTrdAmount = bdPrcPerUnit.multiply(bdFx).multiply(new BigDecimal(lUnits));
+		objTrade.setTrdAmount(bdTrdAmount);
 
-			//Populating the Incoming and Outgoing HashMaps for Entities and Reporting dates
-			if(objTrade.getStrFlag().equalsIgnoreCase(TradeType.SELL)) {
-				if(hmIncomingStlmntAmnt.containsKey(strStlmntDate)) {
-					dTotalAmount = hmIncomingStlmntAmnt.get(strStlmntDate);
-					dTotalAmount = dTotalAmount + dTrdAmount;
-					hmIncomingStlmntAmnt.put(strStlmntDate, dTotalAmount);
-				} else {
-					hmIncomingStlmntAmnt.put(strStlmntDate, dTrdAmount);
-				}
-				if(hmIncomingEntityRank.containsKey(strEntity)) {
-					dTotalAmount = hmIncomingEntityRank.get(strEntity);
-					dTotalAmount = dTotalAmount + dTrdAmount;
-					hmIncomingEntityRank.put(strEntity, dTotalAmount);
-				} else {
-					hmIncomingEntityRank.put(strEntity, dTrdAmount);
-				}
-			} else if (objTrade.getStrFlag().equalsIgnoreCase(TradeType.BUY)) {
-				if(hmOutgoingStlmntAmnt.containsKey(strStlmntDate)) {
-					dTotalAmount = hmOutgoingStlmntAmnt.get(strStlmntDate);
-					dTotalAmount = dTotalAmount + dTrdAmount;
-					hmOutgoingStlmntAmnt.put(strStlmntDate, dTotalAmount);
-				} else {
-					hmOutgoingStlmntAmnt.put(strStlmntDate, dTrdAmount);
-				}
-				if(hmOutgoingEntityRank.containsKey(strEntity)) {
-					dTotalAmount = hmOutgoingEntityRank.get(strEntity);
-					dTotalAmount = dTotalAmount + dTrdAmount;
-					hmOutgoingEntityRank.put(strEntity, dTotalAmount);
-				} else {
-					hmOutgoingEntityRank.put(strEntity, dTrdAmount);
-				}
-			}//End of BUY block
-		}//End of trades for loop
-
-		hmMap.put(TradeConstants.INCOMING_SETTLEMENT_AMNT, hmIncomingStlmntAmnt);
-		hmMap.put(TradeConstants.OUTGOING_SETTLEMENT_AMNT, hmOutgoingStlmntAmnt);
-		hmMap.put(TradeConstants.INCOMING_ENTITY_RANK, hmIncomingEntityRank);
-		hmMap.put(TradeConstants.OUTGOING_ENTITY_RANK, hmOutgoingEntityRank);
-
-		return hmMap;
+		return objTrade;
 	}//End of processTrade method
 	
 }//End of TradeProcessorImpl class

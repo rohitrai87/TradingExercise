@@ -16,7 +16,7 @@
  *
  * Author Name           :Rohit.Rai
  *
- * Date                  :07-Aug-2018
+ * Date                  :08-Aug-2018
  *
  * Revision History      :1.0.0.0
  *                        Author Name  Date        Change Description  Version	 	
@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.math.BigDecimal;
 
 public class TradeUtility {
 	/**
@@ -55,24 +56,24 @@ public class TradeUtility {
 	 * @param unsortedMap for Unsorted Ranking Map
 	 * @return sortedMap for sorted Ranking Map
 	 */
-	public static Map<String, Double> sortMapByEntities(Map<String, Double> unsortedMap) {
+	public static Map<String, BigDecimal> sortMapByEntities(Map<String, BigDecimal> unsortedMap) {
 		//Retrieve entities from the unsorted map
-		Set<Entry<String, Double>> mapEntities = unsortedMap.entrySet();
+		Set<Entry<String, BigDecimal>> mapEntities = unsortedMap.entrySet();
 
 		//Convert mapEntities into a Linked List
-		List<Entry<String, Double>> llEntities = new LinkedList<Entry<String, Double>>(mapEntities);
+		List<Entry<String, BigDecimal>> llEntities = new LinkedList<Entry<String, BigDecimal>>(mapEntities);
 
 		//Sorting the Linked List
-		Collections.sort(llEntities, new Comparator<Entry<String, Double>>() {
-			public int compare(Entry<String, Double> e1,
-					Entry<String, Double> e2) {
+		Collections.sort(llEntities, new Comparator<Entry<String, BigDecimal>>() {
+			public int compare(Entry<String, BigDecimal> e1,
+					Entry<String, BigDecimal> e2) {
 				return e2.getValue().compareTo(e1.getValue());
 			}
 		});
 
 		//Storing the list into Linked HashMap to preserve the order of insertion.
-		Map<String, Double> sortedMap = new LinkedHashMap<String, Double>();
-		for(Entry<String, Double> entry: llEntities) {
+		Map<String, BigDecimal> sortedMap = new LinkedHashMap<String, BigDecimal>();
+		for(Entry<String, BigDecimal> entry: llEntities) {
 			sortedMap.put(entry.getKey(), entry.getValue());
 		}
 		

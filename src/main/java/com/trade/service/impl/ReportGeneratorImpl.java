@@ -16,7 +16,7 @@
  *
  * Author Name           :Rohit.Rai
  *
- * Date                  :07-Aug-2018
+ * Date                  :08-Aug-2018
  *
  * Revision History      :1.0.0.0
  *                        Author Name  Date        Change Description  Version	 	
@@ -25,27 +25,25 @@
 
 package com.trade.service.impl;
 
-import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import com.trade.constants.TradeConstants;
 import com.trade.service.ReportGenerator;
 import com.trade.util.TradeUtility;
+import java.math.BigDecimal;
 
 public class ReportGeneratorImpl implements ReportGenerator {
-	private Map<String, Double> hmIncomingStlmntAmnt;
-	private Map<String, Double> hmOutgoingStlmntAmnt;
-	private Map<String, Double> hmIncomingEntityRank;
-	private Map<String, Double> hmOutgoingEntityRank;
-	private static DecimalFormat df = new DecimalFormat("####0.00");
+	private Map<String, BigDecimal> hmIncomingStlmntAmnt;
+	private Map<String, BigDecimal> hmOutgoingStlmntAmnt;
+	private Map<String, BigDecimal> hmIncomingEntityRank;
+	private Map<String, BigDecimal> hmOutgoingEntityRank;
 	
 	/**
 	 * This method is used to generate trade sales report
 	 * @param strReportDate for Reporting Date
 	 * @param hmMap for HashMap containing trade details HashMap
 	 */
-	public void generateTradeSalesReport(String strReportDate, Map<String, Map<String, Double>> hmMap) {
+	public void generateTradeSalesReport(String strReportDate, Map<String, Map<String, BigDecimal>> hmMap) {
 		//Printing the reporting output
 		System.out.println("***************** Amount in USD settled incoming: *************************");
 		if(hmMap.containsKey(TradeConstants.INCOMING_SETTLEMENT_AMNT)) {
@@ -97,14 +95,14 @@ public class ReportGeneratorImpl implements ReportGenerator {
 	 * This method is used to print trade sales report
 	 * @param hmSortedMap for Sorted Ranking Map
 	 */
-	private void printRankReport(Map<String, Double> hmSortedMap) {
+	private void printRankReport(Map<String, BigDecimal> hmSortedMap) {
 		//Printing values after sorting the map
 		int iRank = 0;
 		System.out.println("-------------------------------------------------");
 		System.out.println("Entity		Rank		Trading Amount");
-		for(Entry<String, Double> entry : hmSortedMap.entrySet()) {
+		for(Entry<String, BigDecimal> entry : hmSortedMap.entrySet()) {
 			iRank ++;
-			System.out.println(entry.getKey() + "\t\t" + iRank + "\t\t $" + df.format(entry.getValue()));
+			System.out.println(entry.getKey() + "\t\t" + iRank + "\t\t $" + TradeConstants.df.format(entry.getValue()));
 		}
 		System.out.println("-------------------------------------------------");
 	}//End of printRankReport method

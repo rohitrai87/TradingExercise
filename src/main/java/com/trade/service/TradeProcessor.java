@@ -16,7 +16,7 @@
  *
  * Author Name           :Rohit.Rai
  *
- * Date                  :07-Aug-2018
+ * Date                  :08-Aug-2018
  *
  * Revision History      :1.0.0.0
  *                        Author Name  Date        Change Description  Version	 	
@@ -25,11 +25,8 @@
 
 package com.trade.service;
 
-import java.util.List;
-import java.util.Map;
-
 import com.trade.beans.Trade;
 
 public interface TradeProcessor {
-    public abstract Map<String, Map<String, Double>> processTrade(List<Trade> alTrade);
+    public abstract Trade processTrade(Trade objTrade);
 }//End of TradeProcessor interface

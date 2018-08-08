@@ -16,7 +16,7 @@
  *
  * Author Name           :Rohit.Rai
  *
- * Date                  :07-Aug-2018
+ * Date                  :08-Aug-2018
  *
  * Revision History      :1.0.0.0
  *                        Author Name  Date        Change Description  Version	 	
@@ -26,20 +26,21 @@
 package com.trade.beans;
 
 import java.util.Date;
+import java.math.BigDecimal;
 
 /**
  * This class is to represent Trades
  */
 public class Trade {
-	public Trade(String strEntity, String strFlag, double fFxRate, String strCurr, Date instrDate, Date origStlmntDate, long lUnits, double fPrcPerUnit) {
+	public Trade(String strEntity, String strFlag, BigDecimal bdFxRate, String strCurr, Date instrDate, Date origStlmntDate, long lUnits, BigDecimal bdPrcPerUnit) {
 		this.strEntity = strEntity;
 		this.strFlag = strFlag;
-		this.dFxRate = fFxRate;
+		this.bdFxRate = bdFxRate;
 		this.strCurr = strCurr;
 		this.instrDate = instrDate;
 		this.origStlmntDate = origStlmntDate;
 		this.lUnits = lUnits;
-		this.dPrcPerUnit = fPrcPerUnit;
+		this.bdPrcPerUnit = bdPrcPerUnit;
 	}
 	
 	private String strEntity;
@@ -49,9 +50,9 @@ public class Trade {
 	private Date origStlmntDate;
 	private Date revStlmntDate;
 	private long lUnits;
-	private double dFxRate;
-	private double dPrcPerUnit;
-	private double dTrdAmnt;
+	private BigDecimal bdFxRate;
+	private BigDecimal bdPrcPerUnit;
+	private BigDecimal bdTrdAmnt;
 	
 	public String getStrEntity() {
 		return strEntity;
@@ -61,8 +62,8 @@ public class Trade {
 		return strFlag;
 	}
 	
-	public double getFxRate() {
-		return dFxRate;
+	public BigDecimal getFxRate() {
+		return bdFxRate;
 	}
 	
 	public String getStrCurr() {
@@ -89,16 +90,16 @@ public class Trade {
 		return lUnits;
 	}
 	
-	public double getPricePerUnit() {
-		return dPrcPerUnit;
+	public BigDecimal getPricePerUnit() {
+		return bdPrcPerUnit;
 	}
 	
-	public void setTrdAmount(double dAmnt) {
-		this.dTrdAmnt = dAmnt;
+	public void setTrdAmount(BigDecimal bdAmnt) {
+		this.bdTrdAmnt = bdAmnt;
 	}
 	
-	public double getTrdAmount() {
-		return dTrdAmnt;
+	public BigDecimal getTrdAmount() {
+		return bdTrdAmnt;
 	}
     
 }//End of Trade class
