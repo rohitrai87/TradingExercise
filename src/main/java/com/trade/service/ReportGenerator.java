@@ -29,5 +29,8 @@ import java.util.Map;
 import java.math.BigDecimal;
 
 public interface ReportGenerator {
-    public abstract void generateTradeSalesReport(String strReportDate, Map<String, Map<String, BigDecimal>> hmMap);
+    public abstract void generateIncomingTradeSalesReport(String strReportDate, Map<String, BigDecimal> hmMap);
+    public abstract void generateOutgoingTradeSalesReport(String strReportDate, Map<String, BigDecimal> hmMap);
+    public abstract void generateIncomingEntityRankingReport(Map<String, BigDecimal> hmMap);
+    public abstract void generateOutgoingEntityRankingReport(Map<String, BigDecimal> hmMap);
 }//End of ReportGenerator interface

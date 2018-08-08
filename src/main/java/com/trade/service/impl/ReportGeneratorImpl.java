@@ -33,78 +33,82 @@ import com.trade.util.TradeUtility;
 import java.math.BigDecimal;
 
 public class ReportGeneratorImpl implements ReportGenerator {
-	private Map<String, BigDecimal> hmIncomingStlmntAmnt;
-	private Map<String, BigDecimal> hmOutgoingStlmntAmnt;
-	private Map<String, BigDecimal> hmIncomingEntityRank;
-	private Map<String, BigDecimal> hmOutgoingEntityRank;
 	
 	/**
-	 * This method is used to generate trade sales report
+	 * This method is used to generate incoming trade sales report
 	 * @param strReportDate for Reporting Date
-	 * @param hmMap for HashMap containing trade details HashMap
+	 * @param hmIncomingStlmntAmnt for HashMap containing incoming trade details
 	 */
-	public void generateTradeSalesReport(String strReportDate, Map<String, Map<String, BigDecimal>> hmMap) {
+	public void generateIncomingTradeSalesReport(String strReportDate, Map<String, BigDecimal> hmIncomingStlmntAmnt) {
 		//Printing the reporting output
-		System.out.println("***************** Amount in USD settled incoming: *************************");
-		if(hmMap.containsKey(TradeConstants.INCOMING_SETTLEMENT_AMNT)) {
-			hmIncomingStlmntAmnt = hmMap.get(TradeConstants.INCOMING_SETTLEMENT_AMNT);
-			if(hmIncomingStlmntAmnt.containsKey(strReportDate)) {
-				System.out.println(hmIncomingStlmntAmnt.get(strReportDate));
-			} else {
-				System.out.println("There are no incoming trades for the settlement day " + strReportDate + "!!!");
-			}
+		System.out.println("****** Amount in incoming USD settled for settlement day " + strReportDate + " *******");
+		if(hmIncomingStlmntAmnt.containsKey(strReportDate)) {
+			System.out.println(hmIncomingStlmntAmnt.get(strReportDate));
 		} else {
-			System.out.println("There are no incoming trades settled on the reporting day!!!");
+			System.out.println("There are no incoming trades for the settlement day " + strReportDate + "!!!");
+		}
+		System.out.println("***************************************************************************");
+		
+	}//End of generateIncomingTradeSalesReport method
+	
+	/**
+	 * This method is used to generate outgoing trade sales report
+	 * @param strReportDate for Reporting Date
+	 * @param hmOutgoingStlmntAmnt for HashMap containing outgoing trade details
+	 */
+	public void generateOutgoingTradeSalesReport(String strReportDate, Map<String, BigDecimal> hmOutgoingStlmntAmnt) {
+		//Printing the reporting output
+		System.out.println("****** Amount in outgoing USD settled for settlement day " + strReportDate + " *******");
+		if(hmOutgoingStlmntAmnt.containsKey(strReportDate)) {
+			System.out.println(hmOutgoingStlmntAmnt.get(strReportDate));
+		} else {
+			System.out.println("There are no outgoing trades for the settlement day " + strReportDate + "!!!");
 		}
 		System.out.println("***************************************************************************");
 
-		System.out.println("***************** Amount in USD settled outgoing: *************************");
-		if(hmMap.containsKey(TradeConstants.OUTGOING_SETTLEMENT_AMNT)) {
-			hmOutgoingStlmntAmnt = hmMap.get(TradeConstants.OUTGOING_SETTLEMENT_AMNT);
-			if(hmOutgoingStlmntAmnt.containsKey(strReportDate)) {
-				System.out.println(hmOutgoingStlmntAmnt.get(strReportDate));
-			} else {
-				System.out.println("There are no outgoing trades for the settlement day " + strReportDate + "!!!");
-			}
-		} else {
-			System.out.println("There are no outgoing trades in the system!!!");
-		}
-		System.out.println("***************************************************************************");
+	}//End of generateOutgoingTradeSalesReport method
 
+	/**
+	 * This method is used to generate incoming entity ranking report
+	 * @param hmIncomingEntityRank for HashMap containing incoming entity trade mapping details
+	 */
+	public void generateIncomingEntityRankingReport(Map<String, BigDecimal> hmIncomingEntityRank) {
+		//Printing the reporting output
 		System.out.println("***************** Ranking of Incmoing Entities: ***************************");
-		if(hmMap.containsKey(TradeConstants.INCOMING_ENTITY_RANK)) {
-			hmIncomingEntityRank = hmMap.get(TradeConstants.INCOMING_ENTITY_RANK);
-			printRankReport(TradeUtility.sortMapByEntities(hmIncomingEntityRank));
-		} else {
-			System.out.println("There are no incoming trades in the system!!!");
-		}
+		System.out.println(printRankReport(TradeUtility.sortMapByEntities(hmIncomingEntityRank)));
 		System.out.println("***************************************************************************");
 
+	}//End of generateIncomingEntityRankingReport method
+	
+	/**
+	 * This method is used to generate outgoing entity ranking report
+	 * @param hmOutgoingEntityRank for HashMap containing outgoing entity trade mapping details
+	 */
+	public void generateOutgoingEntityRankingReport(Map<String, BigDecimal> hmOutgoingEntityRank) {
+		//Printing the reporting output
 		System.out.println("***************** Ranking of Outgoing Entities: ***************************");
-		if(hmMap.containsKey(TradeConstants.OUTGOING_ENTITY_RANK)) {
-			hmOutgoingEntityRank = hmMap.get(TradeConstants.OUTGOING_ENTITY_RANK);
-			printRankReport(TradeUtility.sortMapByEntities(hmOutgoingEntityRank));
-		} else {
-			System.out.println("There are no outgoing trades in the system!!!");
-		}
+		System.out.println(printRankReport(TradeUtility.sortMapByEntities(hmOutgoingEntityRank)));
 		System.out.println("***************************************************************************");
 
-	}
+	}//End of generateOutgoingEntityRankingReport method
+
 	
 	/**
 	 * This method is used to print trade sales report
 	 * @param hmSortedMap for Sorted Ranking Map
 	 */
-	private void printRankReport(Map<String, BigDecimal> hmSortedMap) {
+	private String printRankReport(Map<String, BigDecimal> hmSortedMap) {
 		//Printing values after sorting the map
 		int iRank = 0;
-		System.out.println("-------------------------------------------------");
-		System.out.println("Entity		Rank		Trading Amount");
+		StringBuffer sbOutput = new StringBuffer();
+		sbOutput.append("---------------------------------------------------------------------------").append("\n")
+		.append("Entity			Rank			Trading Amount" + "\n");
 		for(Entry<String, BigDecimal> entry : hmSortedMap.entrySet()) {
 			iRank ++;
-			System.out.println(entry.getKey() + "\t\t" + iRank + "\t\t $" + TradeConstants.df.format(entry.getValue()));
+			sbOutput.append(entry.getKey() + "\t\t\t" + iRank + "\t\t\t $" + TradeConstants.df.format(entry.getValue()) + "\n");
 		}
-		System.out.println("-------------------------------------------------");
+		sbOutput.append("---------------------------------------------------------------------------");
+		return sbOutput.toString();
 	}//End of printRankReport method
 	
 }//End of ReportGeneratorImpl class

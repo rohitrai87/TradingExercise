@@ -3,11 +3,8 @@ package com.trade.service.impl;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import com.trade.constants.TradeConstants;
 
 public class ReportGeneratorImplTest {
 	private ReportGeneratorImpl objRepGenImplTest;
@@ -15,7 +12,6 @@ public class ReportGeneratorImplTest {
 	private Map<String, BigDecimal> hmOutgoingStlmntAmnt;
 	private Map<String, BigDecimal> hmIncomingEntityRank;
 	private Map<String, BigDecimal> hmOutgoingEntityRank;
-	private Map<String, Map<String, BigDecimal>> hmMap;
 	
 	@Before
 	public void before() {
@@ -24,7 +20,6 @@ public class ReportGeneratorImplTest {
 		hmOutgoingStlmntAmnt = new HashMap<String, BigDecimal>();
 		hmIncomingEntityRank = new HashMap<String, BigDecimal>();
 		hmOutgoingEntityRank = new HashMap<String, BigDecimal>();
-		hmMap = new HashMap<String, Map<String, BigDecimal>>();
 		
 		hmIncomingStlmntAmnt.put("30/07/2018", BigDecimal.valueOf(435345.5));
 		hmIncomingStlmntAmnt.put("29/07/2018", BigDecimal.valueOf(7636367.54));
@@ -50,18 +45,36 @@ public class ReportGeneratorImplTest {
 		hmOutgoingEntityRank.put("zoo", BigDecimal.valueOf(456587674.6756));
 		hmOutgoingEntityRank.put("hoo", BigDecimal.valueOf(12132423.60));
 		
-		hmMap.put(TradeConstants.INCOMING_SETTLEMENT_AMNT, hmIncomingStlmntAmnt);
-		hmMap.put(TradeConstants.OUTGOING_SETTLEMENT_AMNT, hmOutgoingStlmntAmnt);
-		hmMap.put(TradeConstants.INCOMING_ENTITY_RANK, hmIncomingEntityRank);
-		hmMap.put(TradeConstants.OUTGOING_ENTITY_RANK, hmOutgoingEntityRank);
 	}//End of before method
 	
 	@Test
-	public void testGenerateTradeSalesReport() {
-		objRepGenImplTest.generateTradeSalesReport("28/07/2018", hmMap);
-		objRepGenImplTest.generateTradeSalesReport("29/07/2018", hmMap);
-		objRepGenImplTest.generateTradeSalesReport("30/07/2018", hmMap);
-		objRepGenImplTest.generateTradeSalesReport("31/07/2018", hmMap);
-	}//End of testGenerateTradeSalesReport method
+	public void testIncomingGenerateTradeSalesReport() {
+		objRepGenImplTest.generateIncomingTradeSalesReport("28/07/2018", hmIncomingStlmntAmnt);
+		objRepGenImplTest.generateIncomingTradeSalesReport("29/07/2018", hmIncomingStlmntAmnt);
+		objRepGenImplTest.generateIncomingTradeSalesReport("30/07/2018", hmIncomingStlmntAmnt);
+		objRepGenImplTest.generateIncomingTradeSalesReport("31/07/2018", hmIncomingStlmntAmnt);
+		
+	}//End of testIncomingGenerateTradeSalesReport method
+	
+	@Test
+	public void testOutgoingGenerateTradeSalesReport() {
+		objRepGenImplTest.generateOutgoingTradeSalesReport("28/07/2018", hmOutgoingStlmntAmnt);
+		objRepGenImplTest.generateOutgoingTradeSalesReport("29/07/2018", hmOutgoingStlmntAmnt);
+		objRepGenImplTest.generateOutgoingTradeSalesReport("30/07/2018", hmOutgoingStlmntAmnt);
+		objRepGenImplTest.generateOutgoingTradeSalesReport("31/07/2018", hmOutgoingStlmntAmnt);
+		
+	}//End of testOutgoingGenerateTradeSalesReport method
+	
+	@Test
+	public void generateIncomingEntityRankingReport() {
+		objRepGenImplTest.generateIncomingEntityRankingReport(hmIncomingEntityRank);
+		
+	}//End of generateIncomingEntityRankingReport method
+	
+	@Test
+	public void generateOutgoingEntityRankingReport() {
+		objRepGenImplTest.generateOutgoingEntityRankingReport(hmOutgoingEntityRank);
+		
+	}//End of generateOutgoingEntityRankingReport method
 
 }//End of ReportGeneratorImplTest class

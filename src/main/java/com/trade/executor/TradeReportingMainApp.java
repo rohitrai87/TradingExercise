@@ -45,6 +45,11 @@ public class TradeReportingMainApp {
 		ReportGenerator objRepGen = new ReportGeneratorImpl();
 		Map<String, Map<String, BigDecimal>> hmMap;
 		TradeDAO objTrdDAO = new TradeDAO();
+		Map<String, BigDecimal> hmIncomingStlmntAmnt;
+		Map<String, BigDecimal> hmOutgoingStlmntAmnt;
+		Map<String, BigDecimal> hmIncomingEntityRank;
+		Map<String, BigDecimal> hmOutgoingEntityRank;
+		
 		try {
 			hmMap = objTrdProc.getTradeMap(objTrdDAO.getTrades());
 			//Read Reporting Date from the console
@@ -60,7 +65,39 @@ public class TradeReportingMainApp {
 			}
 			
 			System.out.println("Reporting date: " + strReportDate);
-			objRepGen.generateTradeSalesReport(strReportDate, hmMap);
+			
+			//Incoming Trade Settlement Block
+			if(hmMap.containsKey(TradeConstants.INCOMING_SETTLEMENT_AMNT)) {
+				hmIncomingStlmntAmnt = hmMap.get(TradeConstants.INCOMING_SETTLEMENT_AMNT);
+				objRepGen.generateIncomingTradeSalesReport(strReportDate, hmIncomingStlmntAmnt);
+			} else {
+				System.out.println("There are no incoming trades settled on the reporting day " + strReportDate + "!!!");
+			}
+			
+			//Outgoing Trade Settlement Block
+			if(hmMap.containsKey(TradeConstants.OUTGOING_SETTLEMENT_AMNT)) {
+				hmOutgoingStlmntAmnt = hmMap.get(TradeConstants.OUTGOING_SETTLEMENT_AMNT);
+				objRepGen.generateOutgoingTradeSalesReport(strReportDate, hmOutgoingStlmntAmnt);
+			} else {
+				System.out.println("There are no outgoing trades settled on the reporting day " + strReportDate + "!!!");
+			}
+			
+			//Incoming Entity Ranking Block
+			if(hmMap.containsKey(TradeConstants.INCOMING_ENTITY_RANK)) {
+				hmIncomingEntityRank = hmMap.get(TradeConstants.INCOMING_ENTITY_RANK);
+				objRepGen.generateIncomingEntityRankingReport(hmIncomingEntityRank);
+			} else {
+				System.out.println("There are no incoming trades in the system!!!");
+			}
+			
+			//Outgoing Entity Ranking Block
+			if(hmMap.containsKey(TradeConstants.OUTGOING_ENTITY_RANK)) {
+				hmOutgoingEntityRank = hmMap.get(TradeConstants.OUTGOING_ENTITY_RANK);
+				objRepGen.generateOutgoingEntityRankingReport(hmOutgoingEntityRank);
+			} else {
+				System.out.println("There are no outgoing trades in the system!!!");
+			}
+			
 		} catch(ParseException dateFormatExcp) {
 			System.out.println("Date format should be in dd/MM/yyyy format!!!!");
 			dateFormatExcp.printStackTrace();
