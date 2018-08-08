@@ -54,11 +54,11 @@ public class TradeReportingMainApp {
 			Date repDate = TradeConstants.sdf.parse(strDate);
 			String strReportDate = TradeConstants.sdf.format(repDate);
 			scanner.close();
-			System.out.println("Reporting date?>>>>: " + strDate);
-			
-			if(!TradeUtility.isThisDateValid(strDate, TradeConstants.sdf)) {
+			//Validate Date Format
+			if(!TradeUtility.isValidFormat(strDate)) {
 				throw new IncorrectDateFormatException("Date format is incorrect!!!");
 			}
+			
 			System.out.println("Reporting date: " + strReportDate);
 			objRepGen.generateTradeSalesReport(strReportDate, hmMap);
 		} catch(ParseException dateFormatExcp) {

@@ -126,11 +126,4 @@ public class TradeInstanceFactory {
 		alTrades.add(objTrade);
 	}//End of populateTrades method
 
-	/**
-	 * This method will add trades into the existing list of trades
-	 */
-	public static void addTrade(Trade objTrade) {
-		alTrades.add(objTrade);
-	}//End of addTrade method
-
 }//End of TradeInstanceFactory class

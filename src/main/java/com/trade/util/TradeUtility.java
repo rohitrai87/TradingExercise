@@ -26,7 +26,6 @@
 package com.trade.util;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -96,18 +95,5 @@ public class TradeUtility {
         }
         return date != null;
     }//End of isValidFormat method
-
-	public static boolean isThisDateValid(String dateToValidate, SimpleDateFormat dateFormat) throws ParseException {
-		if(dateToValidate == null){
-			return false;
-		}
-		//dateFormat.setLenient(false);
-		//if not valid, it will throw ParseException
-		dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		dateFormat.setLenient(false);
-		Date date = dateFormat.parse(dateToValidate);
-		System.out.println(date);
-		return true;
-	}
 	
 }//End of TradeUtility class

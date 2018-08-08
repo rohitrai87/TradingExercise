@@ -96,7 +96,7 @@ public class TradeMappingImpl implements TradeMapping {
 					hmOutgoingEntityRank.put(strEntity, bdTrdAmount);
 				}
 			}//End of BUY block
-		}//End of tardes for loop
+		}//End of trades for loop
 
 		hmMap.put(TradeConstants.INCOMING_SETTLEMENT_AMNT, hmIncomingStlmntAmnt);
 		hmMap.put(TradeConstants.OUTGOING_SETTLEMENT_AMNT, hmOutgoingStlmntAmnt);

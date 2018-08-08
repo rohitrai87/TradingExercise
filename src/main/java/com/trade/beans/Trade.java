@@ -116,6 +116,6 @@ public class Trade {
                 ", Price Per Unit = " + bdPrcPerUnit +
                 ", Total Amount = " + bdTrdAmnt +
                 '}';
-    }
+    }//End of toString method
     
 }//End of Trade class

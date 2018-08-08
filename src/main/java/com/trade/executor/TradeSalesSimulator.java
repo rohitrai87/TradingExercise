@@ -42,11 +42,4 @@ public class TradeSalesSimulator {
 		return alTrades;
 	}//End of getTradeDetails method
 
-	/**
-	 * This method will add trades into the existing trade factory
-	 */
-	public void addTrade(Trade objTrade) {
-		TradeInstanceFactory.addTrade(objTrade);
-	}//End of addTrade method
-
 }//End of TradeSalesSimulator class
