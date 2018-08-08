@@ -35,22 +35,30 @@ import com.trade.service.ReportGenerator;
 import com.trade.service.TradeMapping;
 import com.trade.service.impl.ReportGeneratorImpl;
 import com.trade.service.impl.TradeMappingImpl;
+import com.trade.util.TradeUtility;
 import com.trade.constants.TradeConstants;
+import com.trade.exceptions.IncorrectDateFormatException;
 
 public class TradeReportingMainApp {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IncorrectDateFormatException {
+		TradeMapping objTrdProc = new TradeMappingImpl();
+		ReportGenerator objRepGen = new ReportGeneratorImpl();
+		Map<String, Map<String, BigDecimal>> hmMap;
+		TradeDAO objTrdDAO = new TradeDAO();
 		try {
-			TradeMapping objTrdProc = new TradeMappingImpl();
-			ReportGenerator objRepGen = new ReportGeneratorImpl();
-			Map<String, Map<String, BigDecimal>> hmMap;
-			TradeDAO objTrdDAO = new TradeDAO();
 			hmMap = objTrdProc.getTradeMap(objTrdDAO.getTrades());
 			//Read Reporting Date from the console
 			System.out.print("Enter a date for reporting in dd/MM/yyyy format: ");
 			Scanner scanner = new Scanner(System.in);
-			Date repDate = TradeConstants.sdf.parse(scanner.nextLine());
+			String strDate = scanner.nextLine();
+			Date repDate = TradeConstants.sdf.parse(strDate);
 			String strReportDate = TradeConstants.sdf.format(repDate);
 			scanner.close();
+			System.out.println("Reporting date?>>>>: " + strDate);
+			
+			if(!TradeUtility.isThisDateValid(strDate, TradeConstants.sdf)) {
+				throw new IncorrectDateFormatException("Date format is incorrect!!!");
+			}
 			System.out.println("Reporting date: " + strReportDate);
 			objRepGen.generateTradeSalesReport(strReportDate, hmMap);
 		} catch(ParseException dateFormatExcp) {

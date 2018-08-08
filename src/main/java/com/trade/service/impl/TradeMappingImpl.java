@@ -57,7 +57,6 @@ public class TradeMappingImpl implements TradeMapping {
 			strEntity = objTrade.getStrEntity();
 			strStlmntDate = TradeConstants.sdf.format(objTrade.getRevStlmntDate());
 			bdTrdAmount = objTrade.getTrdAmount();
-			System.out.println("Settlement date: " + strStlmntDate);
 
 			//Populating the Incoming and Outgoing HashMaps for Entities and Reporting dates
 			if(objTrade.getStrFlag().equalsIgnoreCase(TradeType.SELL)) {
