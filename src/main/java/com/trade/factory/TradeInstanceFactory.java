@@ -129,9 +129,8 @@ public class TradeInstanceFactory {
 	/**
 	 * This method will add trades into the existing list of trades
 	 */
-	public static List<Trade> addTrade(Trade objTrade) {
+	public static void addTrade(Trade objTrade) {
 		alTrades.add(objTrade);
-		return alTrades;
 	}//End of addTrade method
 
 }//End of TradeInstanceFactory class

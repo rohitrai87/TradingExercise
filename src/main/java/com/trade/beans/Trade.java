@@ -101,5 +101,21 @@ public class Trade {
 	public BigDecimal getTrdAmount() {
 		return bdTrdAmnt;
 	}
+	
+	@Override
+    public String toString() {
+        return "Trade {" +
+                "Entity = '" + strEntity +
+                ", Flag = " + strFlag +
+                ", Currency = " + strCurr +
+                ", Instruction Date = " + instrDate +
+                ", Settlement Date = " + origStlmntDate +
+                ", Revised Settlement Date = " + revStlmntDate +
+                ", Units = " + lUnits +
+                ", fX Rate = " + bdFxRate +
+                ", Price Per Unit = " + bdPrcPerUnit +
+                ", Total Amount = " + bdTrdAmnt +
+                '}';
+    }
     
 }//End of Trade class
