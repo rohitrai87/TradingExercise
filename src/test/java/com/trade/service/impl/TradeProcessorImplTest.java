@@ -16,6 +16,7 @@ import com.trade.constants.TradeConstants;
 import com.trade.service.TradeProcessor;
 
 public class TradeProcessorImplTest {
+	//Object under testing
 	private TradeProcessor objTradeProc;
 	
 	@Mock

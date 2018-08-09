@@ -3,17 +3,11 @@ package com.trade.util;
 import static org.junit.Assert.*;
 import java.text.ParseException;
 import java.util.Date;
-import org.junit.Before;
 import org.junit.Test;
 import com.trade.constants.TradeConstants;
 
 public class TradeUtilityTest {
 	private Date date;
-	
-	@Before
-	public void before() throws ParseException {
-		
-	}//End of before method
 	
 	@Test
 	public void testAddDays() throws ParseException {
@@ -34,6 +28,6 @@ public class TradeUtilityTest {
 		fail("should have thrown excepton!!");
 		assertTrue(!TradeUtility.isValidFormat("20180729"));
 		fail("should have thrown excepton!!!!");
-	}
+	}//End of handleEvent_ok method
 	
 }//End of TradeUtilityTest class

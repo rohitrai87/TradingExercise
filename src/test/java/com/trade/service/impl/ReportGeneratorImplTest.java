@@ -66,15 +66,15 @@ public class ReportGeneratorImplTest {
 	}//End of testOutgoingGenerateTradeSalesReport method
 	
 	@Test
-	public void generateIncomingEntityRankingReport() {
+	public void testGenerateIncomingEntityRankingReport() {
 		objRepGenImplTest.generateIncomingEntityRankingReport(hmIncomingEntityRank);
 		
-	}//End of generateIncomingEntityRankingReport method
+	}//End of testGenerateIncomingEntityRankingReport method
 	
 	@Test
-	public void generateOutgoingEntityRankingReport() {
+	public void testGenerateOutgoingEntityRankingReport() {
 		objRepGenImplTest.generateOutgoingEntityRankingReport(hmOutgoingEntityRank);
 		
-	}//End of generateOutgoingEntityRankingReport method
+	}//End of testGenerateOutgoingEntityRankingReport method
 
 }//End of ReportGeneratorImplTest class

@@ -19,6 +19,7 @@ import com.trade.constants.TradeConstants;
 import com.trade.service.TradeMapping;
 
 public class TradeMappingImplTest {
+	//Object under testing
 	private TradeMapping objTradeMap;
 	private List<Trade> alTrades;
 	private Map<String, Map<String, BigDecimal>> hmMap;

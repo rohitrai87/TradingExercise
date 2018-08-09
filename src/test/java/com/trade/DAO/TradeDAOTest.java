@@ -1,28 +1,24 @@
 package com.trade.DAO;
 
 import static org.junit.Assert.*;
-
 import java.text.ParseException;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import com.trade.beans.Trade;
-import com.trade.executor.TradeSalesSimulator;
 
 public class TradeDAOTest {
-	private TradeSalesSimulator objTradeSalSim;
+	private TradeDAO objTradeDAO;
 	private List<Trade> alTradeList;
 	
 	@Before
 	public void before() {
-		objTradeSalSim = new TradeSalesSimulator();
+		objTradeDAO = new TradeDAO();
 	}//End of before method
 	
 	@Test
-	public void testGetTradeDetails() throws ParseException {
-		alTradeList = objTradeSalSim.getTradeDetails();
+	public void testGetTrades() throws ParseException {
+		alTradeList = objTradeDAO.getTrades();
 		assertNotNull(alTradeList);
 		assertTrue(!alTradeList.isEmpty());
 		assertEquals(5, alTradeList.stream().filter(event -> event.getStrEntity().equals("foo")).count());
@@ -32,7 +28,7 @@ public class TradeDAOTest {
 		assertEquals(1, alTradeList.stream().filter(event -> event.getStrEntity().equals("moo")).count());
 		assertEquals(1, alTradeList.stream().filter(event -> event.getStrEntity().equals("boo")).count());
 		assertEquals(2, alTradeList.stream().filter(event -> event.getStrEntity().equals("hoo")).count());
-	}//End of testGetTradeDetails method
+	}//End of testGetTrades method
 
 }//End of TradeDAOTest class
 
