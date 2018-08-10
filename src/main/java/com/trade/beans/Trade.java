@@ -105,7 +105,7 @@ public class Trade {
 	@Override
     public String toString() {
         return "Trade {" +
-                "Entity = '" + strEntity +
+                "Entity = " + strEntity +
                 ", Flag = " + strFlag +
                 ", Currency = " + strCurr +
                 ", Instruction Date = " + instrDate +
@@ -115,7 +115,7 @@ public class Trade {
                 ", fX Rate = " + bdFxRate +
                 ", Price Per Unit = " + bdPrcPerUnit +
                 ", Total Amount = " + bdTrdAmnt +
-                '}';
+                "}";
     }//End of toString method
     
 }//End of Trade class

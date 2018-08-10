@@ -48,7 +48,7 @@ public class TradeProcessorImplTest {
 		dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	}//End of before method
 	
-	//This methoid tests the logic when trade settlement date falls on their respective weekends for a currency
+	//This method tests the logic when trade settlement date falls on their respective weekends for a currency
 	@Test
 	public void testProcessTradeOnWeekends() throws ParseException {
 		objTrade1 = objTradeProc.processTrade(objTrade1);
@@ -105,10 +105,11 @@ public class TradeProcessorImplTest {
 		assertTrue((objTrade11.getStrCurr()).equals("GBP"));
 		assertTrue((objTrade11.getOrigStlmntDate()).equals(dateFormat.parse("29/07/2018")));
 		assertTrue((objTrade11.getRevStlmntDate()).equals(dateFormat.parse("30/07/2018")));
-		assertEquals(objTrade10.getTrdAmount(), (BigDecimal.valueOf(1.70).multiply(BigDecimal.valueOf(90.5))).multiply(new BigDecimal(5500)));
+		assertEquals(objTrade11.getTrdAmount(), (BigDecimal.valueOf(1.70).multiply(BigDecimal.valueOf(90.5))).multiply(new BigDecimal(5500)));
 		
 	}//End of testProcessTradeOnWeekends method
 
+	//This method tests the logic when trade settlement date falls on their respective weekdays for a currency
 	@Test
 	public void testProcessTradeOnWeekdays() throws ParseException {		
 		objTrade3 = objTradeProc.processTrade(objTrade3);

@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -109,15 +108,48 @@ public class TradeMappingImplTest {
 	}//End of before method
 	
 	@Test
-	public void getTradeMapTest() {
+	public void getTradeMapTest() throws ParseException {
 		hmMap = objTradeMap.getTradeMap(alTrades);
+		
+		//Validating consolidates map
 		assertNotNull(hmMap);
 		assertTrue((hmMap.size() != 0));
 		assertEquals(4, hmMap.size());
+		
+		//Validating incoming settlement map
+		assertNotNull(hmMap.get(TradeConstants.INCOMING_SETTLEMENT_AMNT));
+		assertTrue((hmMap.get(TradeConstants.INCOMING_SETTLEMENT_AMNT).size() != 0));
 		assertEquals(3, hmMap.get(TradeConstants.INCOMING_SETTLEMENT_AMNT).size());
+		assertEquals(new BigDecimal("79157.5000"), hmMap.get(TradeConstants.INCOMING_SETTLEMENT_AMNT).get("29/07/2018"));
+		assertEquals(new BigDecimal("223462.500"), hmMap.get(TradeConstants.INCOMING_SETTLEMENT_AMNT).get("30/07/2018"));
+		assertEquals(new BigDecimal("94837.500"), hmMap.get(TradeConstants.INCOMING_SETTLEMENT_AMNT).get("31/07/2018"));
+		
+		//Validating outgoing settlement map
+		assertNotNull(hmMap.get(TradeConstants.OUTGOING_SETTLEMENT_AMNT));
+		assertTrue((hmMap.get(TradeConstants.OUTGOING_SETTLEMENT_AMNT).size() != 0));
 		assertEquals(3, hmMap.get(TradeConstants.OUTGOING_SETTLEMENT_AMNT).size());
+		assertEquals(new BigDecimal("63326.0000"), hmMap.get(TradeConstants.OUTGOING_SETTLEMENT_AMNT).get("29/07/2018"));
+		assertEquals(new BigDecimal("253302.5000"), hmMap.get(TradeConstants.OUTGOING_SETTLEMENT_AMNT).get("30/07/2018"));
+		assertEquals(new BigDecimal("41572.500"), hmMap.get(TradeConstants.OUTGOING_SETTLEMENT_AMNT).get("31/07/2018"));
+		
+		//Validating incoming entity rank map
+		assertNotNull(hmMap.get(TradeConstants.INCOMING_ENTITY_RANK));
+		assertTrue((hmMap.get(TradeConstants.INCOMING_ENTITY_RANK).size() != 0));
 		assertEquals(4, hmMap.get(TradeConstants.INCOMING_ENTITY_RANK).size());
+		assertEquals(new BigDecimal("79157.5000"), hmMap.get(TradeConstants.INCOMING_ENTITY_RANK).get("foo"));
+		assertEquals(new BigDecimal("73440.000"), hmMap.get(TradeConstants.INCOMING_ENTITY_RANK).get("bar"));
+		assertEquals(new BigDecimal("230400.000"), hmMap.get(TradeConstants.INCOMING_ENTITY_RANK).get("zoo"));
+		assertEquals(new BigDecimal("14460.000"), hmMap.get(TradeConstants.INCOMING_ENTITY_RANK).get("noo"));
+		
+		//Validating outgoing entity rank map
+		assertNotNull(hmMap.get(TradeConstants.OUTGOING_ENTITY_RANK));
+		assertTrue((hmMap.get(TradeConstants.OUTGOING_ENTITY_RANK).size() != 0));
 		assertEquals(4, hmMap.get(TradeConstants.OUTGOING_ENTITY_RANK).size());
+		assertEquals(new BigDecimal("63326.0000"), hmMap.get(TradeConstants.OUTGOING_ENTITY_RANK).get("foo"));
+		assertEquals(new BigDecimal("55080.000"), hmMap.get(TradeConstants.OUTGOING_ENTITY_RANK).get("bar"));
+		assertEquals(new BigDecimal("156650.0000"), hmMap.get(TradeConstants.OUTGOING_ENTITY_RANK).get("zoo"));
+		assertEquals(new BigDecimal("83145.000"), hmMap.get(TradeConstants.OUTGOING_ENTITY_RANK).get("moo"));
+		
 	}//End of getTradeMapTest method
 	
 }//End of TradeMappingImplTest class
